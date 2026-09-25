@@ -49,6 +49,18 @@ function renderTicket(t) {
   badge.textContent = t.status;
 
   statusSelect.value = t.status;
+  const prio = document.createElement("span");
+  prio.className = `badge ${PRIORITY_BADGE[t.priority] || ""}`;
+  prio.textContent = t.priority;
+  document.getElementById("t-priority").replaceChildren(prio);
+
+  const sla = getSla(t);
+  const slaBox = document.getElementById("t-sla");
+  if (sla) {
+    slaBox.replaceChildren(makeSlaBadge(sla));
+  } else {
+    slaBox.textContent = "Resolved";
+  }
   view.classList.remove("d-none");
 }
 

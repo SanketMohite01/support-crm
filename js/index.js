@@ -23,7 +23,7 @@ function showMessage(text, className = "text-muted") {
   listBody.innerHTML = "";
   const tr = document.createElement("tr");
   const td = document.createElement("td");
-  td.colSpan = 5;
+  td.colSpan = 6;
   td.className = `text-center py-4 ${className}`;
   td.textContent = text;
   tr.appendChild(td);
@@ -40,19 +40,33 @@ function renderTickets(tickets) {
       window.location.href = `ticket.html?id=${encodeURIComponent(t.ticket_id)}`;
     });
 
-    const cells = [t.ticket_id, t.customer_name, t.subject];
-    cells.forEach((value, i) => {
+    [t.ticket_id, t.customer_name, t.subject].forEach((value, i) => {
       const td = document.createElement("td");
       td.textContent = value;
       if (i === 0) td.className = "fw-semibold text-nowrap";
       tr.appendChild(td);
     });
 
+    const prioTd = document.createElement("td");
+    const prio = document.createElement("span");
+    prio.className = `badge ${PRIORITY_BADGE[t.priority] || ""}`;
+    prio.textContent = t.priority;
+    prioTd.appendChild(prio);
+    tr.appendChild(prioTd);
+
     const statusTd = document.createElement("td");
+    statusTd.className = "text-nowrap";
     const badge = document.createElement("span");
     badge.className = `badge ${STATUS_BADGE[t.status] || "text-bg-light"}`;
     badge.textContent = t.status;
     statusTd.appendChild(badge);
+
+    const sla = getSla(t);
+    if (sla && sla.level !== "ok") {
+      const slaBadge = makeSlaBadge(sla);
+      slaBadge.classList.add("ms-1");
+      statusTd.appendChild(slaBadge);
+    }
     tr.appendChild(statusTd);
 
     const dateTd = document.createElement("td");
@@ -70,7 +84,7 @@ async function loadTickets() {
 
   let query = db
     .from("tickets")
-    .select("ticket_id, customer_name, subject, status, created_at")
+    .select("ticket_id, customer_name, subject, status, priority, created_at")
     .order("created_at", { ascending: false });
 
   const status = statusFilter.value;

@@ -22,6 +22,7 @@ form.addEventListener("submit", async (e) => {
     customer_email: form.customer_email.value.trim(),
     subject: form.subject.value.trim(),
     description: form.description.value.trim(),
+    priority: form.priority.value,
   };
 
   try {
