@@ -2,8 +2,8 @@
 
 A customer support ticketing system built for the Datastraw assessment. Create tickets, search and filter them, view details, update status, and add notes — with a priority + SLA indicator to flag tickets that need urgent attention.
 
-**Live app:*https://support-crm-three-ashy.vercel.app/*
-**Demo video:\*\* [ADD YOUR YOUTUBE LINK HERE]
+**Live app:** https://support-crm-three-ashy.vercel.app/
+**Demo video:** https://drive.google.com/drive/folders/18qYbLE4FpA0Yx8HsHR5K65MCejnkf_o8
 
 ## Tech stack
 
